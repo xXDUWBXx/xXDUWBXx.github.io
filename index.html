@@ -5,9 +5,13 @@
     <title>Test Page</title>
     <style>
 		#title {
-			width: auto;
+			position: absolute;
+			margin-left: 5%;
+			margin-right: 5%;
+			margin-top: 0px;
+			width: 80%;
 			text-align: center;
-			margin: auto;
+			right: 10%;
 			background: rgb(200,200,200);
 			padding: 5px;
 		}
@@ -23,15 +27,21 @@
 			background: rgb(255,255,255);
 		}
 		#sidebar-colorful {
-			font-family: "comic sans ms", monospace;
+			font-family: "comic sans ms", cursive;
 		}
 		#colorful-1 {color: rgb(255,0,0);}#colorful-2 {color: rgb(0,255,0);}#colorful-3 {color: rgb(0,0,255);}#colorful-4 {color: rgb(255,255,0);}#colorful-5 {color: rgb(255,0,255);}#colorful-6 {color: rgb(0,255,255);}#colorful-7 {color: rgb(255,175,0);}#colorful-8 {color: rgb(255,0,175);}#colorful-9 {color: rgb(175,255,0);}#colorful-10 {color: rgb(0,175,255);}
+		.content {
+			position: relative;
+			top: 75px;
+			width: 90%;
+			overflow: auto;
+		}
     </style>
   </head>
   <body>
     <h1 id="title">Hello!</h1>
-    <p>This is currently only a test. It doesn't do anything yet. Oh well!</p>
-	<p>Oh hey look a <a href="https://youtu.be/dQw4w9WgXcQ">link!</a></p>
+    <p class="content">This is currently only a test. It doesn't do anything yet. Oh well!</p>
+	<p class="content">Oh hey look a <a href="https://youtu.be/dQw4w9WgXcQ">link!</a></p>
 	<div id="sidebar">
 		<p>Oh wow look it's a sidebar!!! How amazing is that?</p>
 		<p>I mean it doesn't do anything at all but I suppose it's cool, right?</p>
