@@ -75,10 +75,24 @@
 		<h1 id="title">Hello!</h1>
 		<p class="content">Welcome to my webage: the home of <span class="monospace-font">duwb</span>.</p>
 		<p class="content">Oh hey look a <a href="https://youtu.be/dQw4w9WgXcQ">link!</a></p>
+		<!--> Test below </!-->
+		<p id="test" class="content">If you can see this, it hasn't worked.</p>
+		<!--> Test end</!-->
 		<div id="sidebar">
 			<h2>More Stuff</h2>
 			<p>Oh wait there's nothing here yet. Weird.</p>
 			<h1 id="council">The Council is watching<a id="council-link" href="./html/The_Council.html">.</a></h1>
 		</div>
+		<!--> more testing </!-->
+		<script>
+			getText("./html/test.txt");
+
+			async function getText(file) {
+			  let myObject = await fetch(file);
+			  let myText = await myObject.text();
+			  document.getElementById("test").innerHTML = myText;
+			}
+		</script>
+		<!--> testing all over </!-->
 	</body>
 </html>
