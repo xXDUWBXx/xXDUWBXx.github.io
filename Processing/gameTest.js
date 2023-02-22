@@ -1,7 +1,8 @@
 let keyColor = 0;
 let aPressed = false;
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
+  textAlign(CENTER,CENTER);
 }
 
 function draw() {
@@ -11,7 +12,9 @@ function draw() {
   else{
     keyColor = 0;
   }
+  fill(255);
   background(keyColor);
+  text(windowWidth + ", " + windowHeight, windowWidth/2,windowHeight/2);
 }
 
 function keyPressed(){
@@ -23,4 +26,7 @@ function keyReleased(){
   if(key == 'a' || key == 'A'){
     aPressed = false;
   }
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
