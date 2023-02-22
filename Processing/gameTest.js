@@ -20,7 +20,7 @@ function draw() {
   fill(255,0,255);
   stroke(255,0,255);
   strokeWeight(2);
-  line(windowWidth-1,0,windowWidth-1,windowHeight);
+  line(windowWidth,0,windowWidth,windowHeight);
   line(0,windowHeight,windowWidth,windowHeight);
 }
 
