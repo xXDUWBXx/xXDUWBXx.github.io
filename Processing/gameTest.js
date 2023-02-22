@@ -1,7 +1,7 @@
 let keyColor = 0;
 let aPressed = false;
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth,windowHeight);
   textAlign(CENTER,CENTER);
 }
 
@@ -13,8 +13,15 @@ function draw() {
     keyColor = 0;
   }
   fill(255);
+  stroke(255);
+  noStroke();
   background(keyColor);
   text(windowWidth + ", " + windowHeight, windowWidth/2,windowHeight/2);
+  fill(255,0,255);
+  stroke(255,0,255);
+  strokeWeight(2);
+  line(windowWidth-1,0,windowWidth-1,windowHeight);
+  line(0,windowHeight,windowWidth,windowHeight);
 }
 
 function keyPressed(){
