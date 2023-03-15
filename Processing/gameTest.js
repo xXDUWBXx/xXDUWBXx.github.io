@@ -46,7 +46,6 @@ function draw() {
     }
   }
   if(floor(playerFrame/10) >= 9){
-    print(playerFrame);
     playerFrame = 0;
   }
   if(!dPressed && !aPressed){
