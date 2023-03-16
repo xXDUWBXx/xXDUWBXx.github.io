@@ -16,6 +16,8 @@ let cave;
 let scroll = 0;
 let shield = [];
 let medusaPresent = false;
+let hint = false;
+let hintTime = 0;
 function preload() {
   perseus[0] = loadImage('https://xxduwbxx.github.io/html/images/perseusFront.png');
   perseus[1] = loadImage('https://xxduwbxx.github.io/html/images/perseusLeft0.png');
@@ -83,6 +85,10 @@ function draw() {
     image(cave,-scroll,0);
     if(playerX+scroll >= 680 && playerX+scroll <= 770){
       medusaPresent = true;
+      if(hint){
+        fill(255,0,255);
+        text('!',playerX+25,playerY-25);
+      }
     } else {
       medusaPresent = false;
     }
@@ -100,6 +106,13 @@ function draw() {
     }
     if(scroll < 0){
       scroll = 0;
+    }
+    if(hint){
+      if(hintTime <= 360){
+        hintTime ++;
+        fill(255);
+        text('Hint Activated!',250,100);
+      }
     }
   }
   else if(scene == 4){
@@ -194,6 +207,9 @@ function keyPressed(){
   }
   if((key == 'e' || key == 'E') && scene == 3){
     scene = 4;
+  }
+  if((key == 'h' || key == 'H') && scene == 3){
+    hint = true;
   }
 }
 function keyReleased(){
