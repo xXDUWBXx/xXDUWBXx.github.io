@@ -112,6 +112,7 @@ function draw() {
     fill(255);
     stroke(0);
     if(quest){
+      textSize(50);
       text('!',420,275);
       if(playerX >= 325){
         imageMode(CENTER);
@@ -163,7 +164,8 @@ function draw() {
         fill(0,0,200);
         noStroke();
         textSize(15);
-        text('I must seek help from the gods!' + '\n' +'(Press E to continue)',playerX-55,215,160,75);
+        text('I must seek help from the gods!',playerX-55,215,160,50);
+        text('(Press E to continue)',playerX-55,265,160,25);
       }
       else{
         dialogueTimer = 0;
