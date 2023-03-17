@@ -103,6 +103,7 @@ function setup() {
 
 function draw() {
   //scale(scaleFactor);
+  textAlign(CENTER,CENTER);
   if(scene == 0){
     background(0);
     image(hall,0,0,500,500);
