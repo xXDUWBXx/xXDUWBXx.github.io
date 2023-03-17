@@ -162,7 +162,7 @@ function draw() {
         fill(0,0,200);
         noStroke();
         textSize(15);
-        text('I must seek help from the gods!\n(Press E to continue)',playerX-55,215,160,75);
+        text('I must seek help from the gods!' + '\n' +'(Press E to continue)',playerX-55,215,160,75);
       }
       else{
         dialogueTimer = 0;
