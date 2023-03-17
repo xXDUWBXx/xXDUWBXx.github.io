@@ -103,6 +103,7 @@ function setup() {
 
 function draw() {
   //scale(scaleFactor);
+  rectMode(CORNER);
   textAlign(CENTER,CENTER);
   if(scene == 0){
     background(0);
