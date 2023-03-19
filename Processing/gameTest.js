@@ -8,7 +8,7 @@ let gravityVel = 0;
 let perseus = [];
 let playerFrame = 0;
 let playerFrameDelay = 0;
-let scene = 0;
+let scene = 3; //change this back to 0!!!
 let qTSlider = 0;
 let qTEvent = false;
 let slider = false;
@@ -48,6 +48,7 @@ let talkedToHermes = false;
 let hesperides = [];
 let talkedToHesperides = false;
 let talkingTo = "";
+let skin = 0;
 function preload() {
   perseus[0] = loadImage('https://xxduwbxx.github.io/html/images/perseusFront.png');
   perseus[1] = loadImage('https://xxduwbxx.github.io/html/images/perseusLeft0.png');
@@ -58,6 +59,26 @@ function preload() {
   perseus[6] = loadImage('https://xxduwbxx.github.io/html/images/perseusRight1.png');
   perseus[7] = loadImage('https://xxduwbxx.github.io/html/images/perseusRight0.png');
   perseus[8] = loadImage('https://xxduwbxx.github.io/html/images/perseusRight2.png');
+  //+9
+  perseus[9] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredFront.png');
+  perseus[10] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft0.png');
+  perseus[11] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft1.png');
+  perseus[12] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft0.png');
+  perseus[13] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft2.png');
+  perseus[14] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight0.png');
+  perseus[15] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight1.png');
+  perseus[16] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight0.png');
+  perseus[17] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight2.png');
+  //+18
+  perseus[18] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredFrontPurple.png');
+  perseus[19] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft0Purple.png');
+  perseus[20] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft1Purple.png');
+  perseus[21] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft0Purple.png');
+  perseus[22] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredLeft2Purple.png');
+  perseus[23] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight0Purple.png');
+  perseus[24] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight1Purple.png');
+  perseus[25] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight0Purple.png');
+  perseus[26] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight2Purple.png');
   cave = loadImage('https://xxduwbxx.github.io/html/images/cave.png');
   shield[0] = loadImage('https://xxduwbxx.github.io/html/images/shieldFront.png');
   shield[1] = loadImage('https://xxduwbxx.github.io/html/images/shieldFrontMedusa.png');
@@ -99,12 +120,14 @@ function setup() {
     screenSize = windowWidth;
   }
   createCanvas(screenSize,screenSize);
+  frameRate(60);
 }
 
 function draw() {
-  //scale(scaleFactor);
-  rectMode(CORNER);
   textAlign(CENTER,CENTER);
+  scale(scaleFactor);
+  imageMode(CORNER);
+  rectMode(CORNER);
   if(scene == 0){
     background(0);
     image(hall,0,0,500,500);
@@ -113,6 +136,8 @@ function draw() {
     stroke(0);
     if(quest){
       textSize(50);
+      fill(255);
+      stroke(0);
       text('!',420,275);
       if(playerX >= 325){
         imageMode(CENTER);
@@ -164,8 +189,8 @@ function draw() {
         fill(0,0,200);
         noStroke();
         textSize(15);
-        text('I must seek help from the gods!',playerX-55,215,160,50);
-        text('(Press E to continue)',playerX-55,265,160,25);
+        text('I must seek help from the gods!',playerX-55,225,160,35);
+        text('(Press E to continue)',playerX-55,260,160,20);
       }
       else{
         dialogueTimer = 0;
@@ -399,29 +424,252 @@ function draw() {
       fill(255);
       stroke(0);
       strokeWeight(1);
-      if(!talkedToAthena){
-        text("!",35,275);
+      if(dialogueHappening){
+        frozen = true;
+        dialogueTimer ++;
+        textSize(25);
+        fill(255);
+        stroke(0);
+        text('(Press E to continue)',250,450);
+        //Athena
         if(playerX < 60){
-          image(iconE,12.5,250);
+          if(dialogue == 0){
+            fill(255,255,0);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Hello there, Perseus!',0,275);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 1){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Oh, uh, hi Athena',playerX,playerY-25);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 2){
+            fill(255,255,0);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Take this polished shield, you',0,260);
+            text("can use it to see Medusa's reflection",0,275);
+            text('without being turned to stone.',0,290);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 3){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Oh, thanks',playerX,275);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 4){
+            fill(255,255,0);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Remember to press E to enter',0,260);
+            text("Medusa's cave when you see",0,275);
+            text('her reflection in the shield.',0,290);
+            textAlign(CENTER,CENTER);
+          }
+          else if (dialogue == 5){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(LEFT);
+            text('Press E? What are',playerX,275);
+            text('you talking about?',playerX,290);
+            textAlign(CENTER,CENTER);
+          }
+          else{
+            dialogueHappening = false;
+            dialogueTimer = 0;
+            talkedToAthena = true;
+            frozen = false;
+            dialogue = 0;
+          }
+        }
+        //Hermes 150,300, width 50
+        else if(playerX > 100 && playerX < 200){
+          if(dialogue == 0){
+            fill(200,150,100);
+            stroke(0);
+            textSize(15);
+            strokeWeight(1);
+            text("Good evening, Perseus",175,275);
+          }
+          else if(dialogue == 1){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            text("Oh, hi there Hermes",playerX+25,275);
+          }
+          else if(dialogue == 2){
+            fill(200,150,100);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            text("Take my sandals, they will",175,275);
+            text("help you travel more quickly",175,290);
+          }
+          else if(dialogue == 3){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            text("Thanks!",playerX+25,275);
+          }
+          else{
+            dialogueHappening = false;
+            dialogueTimer = 0;
+            talkedToHermes = true;
+            frozen = false;
+            dialogue = 0;
+          }
+        }
+        //Zeus 290,300 width 60
+        else if(playerX < 350 && playerX > 240){
+          if(dialogue == 0){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            text("HI DAD!!!",playerX+25,275);
+          }
+          else if(dialogue == 1){
+            fill(255,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(16);
+            text("Hello son, take these gifts: this adamantine",320,259);
+            text("sword will let you kill Medusa, and the Helm",320,275);
+            text("of Darkness will let you escape unseen.",320,291);
+          }
+          else if(dialogue == 2){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            text("THANKS DAD!!!",playerX+25,275);
+          }
+          else{
+            dialogueHappening = false;
+            dialogueTimer = 0;
+            talkedToZeus = true;
+            frozen = false;
+            dialogue = 0;
+          }
+        }
+        //Hesperides
+        else if(playerX > 390){
+          if(dialogue == 0){
+            fill(255,100,100);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(RIGHT);
+            text("Welcome, Perseus",495,275);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 1){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(RIGHT);
+            text("Hi, where are the other Hesperides?",playerX+50,275);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 2){
+            fill(255,100,100);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(RIGHT);
+            text("They are busy. In the meantime, take",495,275);
+            text("this knapsack to store Medusa's head.",495,290);
+            textAlign(CENTER,CENTER);
+          }
+          else if(dialogue == 3){
+            fill(0,0,255);
+            stroke(0);
+            strokeWeight(1);
+            textSize(15);
+            textAlign(RIGHT);
+            text("Thank you!",playerX+50,275);
+            textAlign(CENTER,CENTER);
+          }
+          else{
+            dialogueHappening = false;
+            dialogueTimer = 0;
+            talkedToHesperides = true;
+            frozen = false;
+            dialogue = 0;
+          }
         }
       }
-      if(!talkedToHermes){
-        text("!",175,275);
-        if(playerX < 200 && playerX > 100){
-          image(iconE,152.5,250);
+      else{
+        if(!talkedToAthena){
+          text("!",35,275);
+          if(playerX < 60){
+            image(iconE,12.5,250);
+          }
+        }
+        if(!talkedToHermes){
+          text("!",175,275);
+          if(playerX < 200 && playerX > 100){
+            image(iconE,152.5,250);
+          }
+        }
+        if(!talkedToZeus){
+          text("!",320,275);
+          if(playerX < 350 && playerX > 240){
+            image(iconE,297.5,250);
+          }
+        }
+        if(!talkedToHesperides){
+          text("!",465,275);
+          if(playerX > 390){
+            image(iconE,442.5,250);
+          }
         }
       }
-      if(!talkedToZeus){
-        text("!",320,275);
-        if(playerX < 350 && playerX > 240){
-          image(iconE,297.5,250);
-        }
+      if(talkedToHermes && talkedToZeus && talkedToHesperides && talkedToAthena){
+        fill(255,0,255);
+        stroke(0);
+        strokeWeight(1);
+        textSize(16);
+        text("Now go and slay that treacherous gorgon!",320,275);
+        textSize(25);
+        fill(255);
+        stroke(0);
+        text('(Press E to continue)',250,450);
       }
-      if(!talkedToHesperides){
-        text("!",465,275);
-        if(playerX > 390){
-          image(iconE,442.5,250);
-        }
+    }
+    else{
+      fill(255,0,255);
+      stroke(0);
+      strokeWeight(1);
+      textSize(16);
+      text("Now go and slay that treacherous gorgon!",320,275);
+      background(0,fade);
+      fade += 2;
+      if(fade >= 255){
+      scene ++;
+      fade = 0;
+      playerX = 0;
       }
     }
   }
@@ -430,8 +678,10 @@ function draw() {
     fill(255);
     noStroke();
     background(0);
+    skin = 9;
     image(cave,-scroll,0);
-    if(playerX+scroll >= 680 && playerX+scroll <= 770){
+    if(playerX+scroll >= 670 && playerX+scroll <= 790){
+      skin = 18;
       medusaPresent = true;
       if(hint){
         fill(255,0,255);
@@ -455,16 +705,13 @@ function draw() {
     if(scroll < 0){
       scroll = 0;
     }
-    if(hint){
-      if(hintTime <= 360){
-        hintTime ++;
-        fill(255);
-        text('Hint Activated!',250,100);
-      }
-    }
   }
   else if(scene == 4){
     //here Perseus will cut off Medusa's head
+    scene --;
+  }
+  else if(scene == 5){
+    //last bit of dialogue w/ polydectes, then he is turned to stone, then camera pans up to sunset :)
     scene --;
   }
   if(scene == 0 || (scene == 1 && !divineIntervention) || scene == 2 || scene == 3){
@@ -522,10 +769,7 @@ function draw() {
     //player
     fill(255,0,0);
     //rect(playerX,playerY,50,100);
-    image(perseus[playerFrame],playerX,playerY,50,100);
-    if(scene == 3){
-      image(shield[int(medusaPresent)],playerX,playerY+15,50,100);
-    }
+    image(perseus[playerFrame+skin],playerX,playerY);
     if(fade != 0){
       background(0,fade);
     }
@@ -589,7 +833,17 @@ function keyPressed(){
       }
     }
     else if(scene == 2){
-      if(playerX < 60 && !talkedToAthena){
+      if((playerX < 60 && !talkedToAthena) || (playerX < 200 && playerX > 100 && !talkedToHermes) || (playerX < 350 && playerX > 240 && !talkedToZeus) || (playerX > 390 && !talkedToHesperides)){
+        dialogueHappening = true;
+      }
+      if(dialogueHappening && dialogueTimer >= 50){
+        dialogueTimer = 0;
+        dialogue ++;
+      }
+      if(talkedToHermes && talkedToZeus && talkedToHesperides && talkedToAthena){
+        quest = false;
+      }
+      /*if(playerX < 60 && !talkedToAthena){
         talkingTo = "athena";
       }
       else if(playerX < 200 && playerX > 100 && !talkedToHermes){
@@ -600,14 +854,11 @@ function keyPressed(){
       }
       else if(playerX > 390 && !talkedToHesperides){
         talkingTo = "hesperides";
-      }
+      }*/
     }
-    else if(scene == 3 && playerX+scroll >= 680 && playerX+scroll <= 770){
+    else if(scene == 3 && playerX+scroll >= 670 && playerX+scroll <= 790){
       scene = 4;
     }
-  }
-  if((key == 'h' || key == 'H') && scene == 3){
-    hint = true;
   }
 }
 function keyReleased(){
@@ -639,10 +890,11 @@ function windowResized(){
 
 /*
 todo:
-- make banquet hall, mountain, inner cave
-- make characters (Polydectes, medusa, old women, gods, etc.)
+- make inner cave
+- make medusa
 - kill medusa
 - kill Polydectes with medusa's head
+- full perseus skin
 - some other stuff, idk
 - fix bugs
 - make presentation
