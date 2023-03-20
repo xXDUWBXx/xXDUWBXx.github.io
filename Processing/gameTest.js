@@ -14,12 +14,12 @@ let qTEvent = false;
 let slider = false;
 let sliderPressed = false;
 let cave;
-let scroll = 0;
+let scroll = 0; //change this back to 0!!!
 let shield = [];
 let medusaPresent = false;
 let hint = false;
 let hintTime = 0;
-let poly;
+let poly = [];
 let hall;
 let frozen = false;
 let quest = true;
@@ -49,6 +49,20 @@ let hesperides = [];
 let talkedToHesperides = false;
 let talkingTo = "";
 let skin = 0;
+let innerCave;
+let medusa = [];
+let pegasus;
+let chrysaor;
+let murder = false;
+let murderTimer = 0;
+let murderFrame = 0;
+let medusaDead = false;
+let pegX = 0;
+let pegY = 0;
+let chryX = 0;
+let chryY = 0;
+let tallHall;
+let stone = 0;
 function preload() {
   perseus[0] = loadImage('https://xxduwbxx.github.io/html/images/perseusFront.png');
   perseus[1] = loadImage('https://xxduwbxx.github.io/html/images/perseusLeft0.png');
@@ -79,10 +93,12 @@ function preload() {
   perseus[24] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight1Purple.png');
   perseus[25] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight0Purple.png');
   perseus[26] = loadImage('https://xxduwbxx.github.io/html/images/perseusArmoredRight2Purple.png');
+  //murder ;)
+  perseus[27] = loadImage('https://xxduwbxx.github.io/html/images/perseusHead.png');
   cave = loadImage('https://xxduwbxx.github.io/html/images/cave.png');
   shield[0] = loadImage('https://xxduwbxx.github.io/html/images/shieldFront.png');
   shield[1] = loadImage('https://xxduwbxx.github.io/html/images/shieldFrontMedusa.png');
-  poly = loadImage('https://xxduwbxx.github.io/html/images/polydectes.png');
+  poly[0] = loadImage('https://xxduwbxx.github.io/html/images/polydectes.png');
   hall = loadImage('https://xxduwbxx.github.io/html/images/hall.png');
   iconE = loadImage('https://xxduwbxx.github.io/html/images/iconE.png');
   darkMountain = loadImage('https://xxduwbxx.github.io/html/images/darkMountain.png');
@@ -105,6 +121,17 @@ function preload() {
   zeus[1] = loadImage('https://xxduwbxx.github.io/html/images/zeus.png');
   hesperides[0] = loadImage('https://xxduwbxx.github.io/html/images/hesperidesHolding.png');
   hesperides[1] = loadImage('https://xxduwbxx.github.io/html/images/hesperides.png');
+  innerCave = loadImage('https://xxduwbxx.github.io/html/images/innerCave.png');
+  medusa[0] = loadImage('https://xxduwbxx.github.io/html/images/medusa.png');
+  medusa[1] = loadImage('https://xxduwbxx.github.io/html/images/medusaMurder0.png');
+  medusa[2] = loadImage('https://xxduwbxx.github.io/html/images/medusaMurder1.png');
+  medusa[3] = loadImage('https://xxduwbxx.github.io/html/images/medusaMurder2.png');
+  medusa[4] = loadImage('https://xxduwbxx.github.io/html/images/medusaMurder3.png');
+  medusa[5] = loadImage('https://xxduwbxx.github.io/html/images/medusaMurder4.png');
+  pegasus = loadImage('https://xxduwbxx.github.io/html/images/pegasus.png');
+  chrysaor = loadImage('https://xxduwbxx.github.io/html/images/chrysaor.png');
+  poly[1] = loadImage('https://xxduwbxx.github.io/html/images/polydectesStone.png');
+  tallHall = loadImage('https://xxduwbxx.github.io/html/images/tallHall.png');
 }
 function setup() {
   //createCanvas(500,500);
@@ -131,9 +158,12 @@ function draw() {
   if(scene == 0){
     background(0);
     image(hall,0,0,500,500);
-    image(poly,390,290);
+    image(poly[0],390,290);
     fill(255);
     stroke(0);
+    textSize(20);
+    text("WASD/Arrow Keys to move",250,440);
+    text("E to interact/skip text",250,460);
     if(quest){
       textSize(50);
       fill(255);
@@ -341,7 +371,8 @@ function draw() {
           fill(100,100,255);
           stroke(0);
           strokeWeight(2);
-          text("Can you please help me find the Hesperides?",playerX+25,playerY-25);
+          textAlign(RIGHT);
+          text("Can you please help me find the Hesperides?",playerX+50,playerY-25);
         }
         else if(dialogue == 1){
           fill(200,200,200);
@@ -349,13 +380,13 @@ function draw() {
           strokeWeight(2);
           text("No.",325,280);
           text("Go away.",450,280);
-          text("We don't like you.",400,310);
+          text("We don't like you.",400,250);
         }
         else if(dialogue == 2){
           fill(100,100,255);
           strokeWeight(2);
           stroke(0);
-          text("Then you leave me no choice but to steal that eye of yours!",playerX-50,playerY-100,150,100);
+          text("Then you leave me no choice but to steal that eye of yours!",playerX-100,playerY-100,150,100);
         }
         else{
           dialogueHappening = false;
@@ -372,6 +403,10 @@ function draw() {
       if(playerX > 300){
         image(iconE,375,250);
       }
+      textSize(15);
+      fill(255);
+      stroke(0);
+      text("Steal the eye while it is at its most vulnerable!",250,450);
     }
     if(theft){
       frozen = true;
@@ -381,7 +416,7 @@ function draw() {
         textSize(15);
         stroke(0);
         fill(100,100,255);
-        text("Haha! I got your eye! Now you must take me to the Hesperides if you ever want your eye back!", playerX-50,playerY-100,150,100);
+        text("Haha! I got your eye! Now you must take me to the Hesperides if you ever want your eye back!", playerX-100,playerY-100,150,100);
       }
       else if(dialogue == 1){
         fill(200,200,200);
@@ -708,13 +743,139 @@ function draw() {
   }
   else if(scene == 4){
     //here Perseus will cut off Medusa's head
-    scene --;
+    fill(255);
+    background(0);
+    image(innerCave,0,0);
+    image(medusa[int(medusaDead)*5],300,350);
+    if(!murder){
+      textSize(50);
+      fill(255);
+      stroke(0);
+      strokeWeight(1);
+      text('!',350,300);
+      if(playerX > 250 && playerX < 400){
+        image(iconE,327.5,277.5);
+      }
+    }
+    else{
+      frozen = true;
+      fill(0);
+      strokeWeight(2);
+      stroke(0);
+      rect(250,300,200,100);
+      push();
+      scale(2);
+      image(medusa[murderFrame],250/2,300/2);
+      pop();
+      murderTimer ++;
+      if(murderTimer > 60 && murderFrame >= 5){
+        murder = false;
+        murderTimer = 0;
+        murderFrame = 0;
+        medusaDead = true;
+        frozen = false;
+        pegX = 350;
+        pegY = 350;
+        chryX = 350;
+        chryY = 350;
+      }
+      else if(murderTimer > 60){
+        murderTimer = 0;
+        murderFrame ++;
+      }
+    }
+    if(medusaDead){
+      image(pegasus,pegX,pegY);
+      pegX -= 5;
+      pegY -= 5;
+      image(chrysaor,chryX,chryY);
+      chryY -= 5;
+      chryX += 5;
+      if(chryY <= 0){
+        background(0,fade);
+        fade += 2;
+        if(fade >= 255){
+          scene ++;
+          fade = 0;
+          playerX = 0;
+          quest = true;
+        }
+      }
+    }
   }
   else if(scene == 5){
     //last bit of dialogue w/ polydectes, then he is turned to stone, then camera pans up to sunset :)
-    scene --;
+    background(255);
+    image(tallHall,0,scroll);
+    image(poly[stone],390,290+scroll+500);
+    if(quest){
+      textSize(50);
+      fill(255);
+      stroke(0);
+      text('!',420,275);
+      if(playerX >= 325){
+        imageMode(CENTER);
+        image(iconE,420,275);
+        imageMode(CORNER);
+      }
+    }
+    else if(dialogueHappening){
+      quest = false;
+      stroke(0);
+      strokeWeight(1);
+      textSize(15);
+      frozen = true;
+      dialogueTimer ++;
+      if(dialogue == 0){
+        fill(255,200);
+        rect(340,220,160,75);
+        fill(100);
+        noStroke();
+        textSize(15);
+        text("Perseus?!? You're back?!? (Press E to continue)",340,220,160,75);
+      }
+      else if(dialogue == 1){
+        fill(255,200);
+        rect(playerX-55,220,160,75);
+        fill(0,0,200);
+        noStroke();
+        textSize(15);
+        text('I have returned with your gift, BEHOLD! (Press E to continue)',playerX-55,220,160,75);
+      }
+      else if(dialogue == 2){
+        fill(255,200);
+        rect(340,240,160,50);
+        fill(255,0,0);
+        stroke(255,0,0);
+        textSize(15);
+        text("WAIT! NO-",420,255);
+        fill(100,255);
+        noStroke();
+        text('(Press E to continue)',420,275)
+      }
+      else{
+        murder = true;
+        dialogueHappening = false;
+      }
+    }
+    if(murder){
+      image(perseus[27],325,300+scroll+500);
+      murderTimer ++;
+      if(murderTimer > 15){
+        stone = 1;
+      }
+      if(murderTimer > 60 && scroll < 0){
+        scroll ++;
+      }
+      if(murderTimer > 120 && murderTimer < 750){
+        fill(0);
+        stroke(255);
+        textSize(50);
+        text("The End",250,250);
+      }
+    }
   }
-  if(scene == 0 || (scene == 1 && !divineIntervention) || scene == 2 || scene == 3){
+  if(!divineIntervention && !murder){
     if(frozen){
       jumpVel = 0;
       dPressed = false;
@@ -858,6 +1019,21 @@ function keyPressed(){
     }
     else if(scene == 3 && playerX+scroll >= 670 && playerX+scroll <= 790){
       scene = 4;
+      playerX = 0;
+      scroll = -500;
+    }
+    else if(scene == 4 && playerX > 250 && playerX < 400){
+      murder = true;
+    }
+    else if(scene == 5){
+      if(playerX >= 325 && quest){
+        quest = false;
+        dialogueHappening = true;
+      }
+      else if(dialogueTimer >= 50){
+        dialogueTimer = 0;
+        dialogue ++;
+      }
     }
   }
 }
