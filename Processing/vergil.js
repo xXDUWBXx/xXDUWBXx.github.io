@@ -110,6 +110,7 @@ function keyPressed() {
   }
   if(key == 'x' || key == 'X'){
     scene = 1;
+    rotation = 0;
   }
   if(key == 'z' || key == 'Z'){
     scene = 0;
