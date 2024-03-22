@@ -37,10 +37,10 @@ function draw() {
   
   push();
   imageMode(CENTER);
-  translate(width/2+screenX+scene*430,height/2+screenY+scene*400);
+  translate(width/2+screenX,height/2+screenY);
   rotate(rotation/500);
   fill(255);
-  image(part[scene],0,0,2500,2500);
+  image(part[scene],0+scene*430,0+scene*400,2500,2500);
   pop();
   push();
   stroke(0);
